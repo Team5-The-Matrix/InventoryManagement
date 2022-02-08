@@ -6,12 +6,22 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 
 public class InventoryManager{
+
+
+
+    public static void main(String[] args) throws FileNotFoundException, IOException{
+        String csvPath = "/Users/noahpearsonkramer/Desktop/Sprint1/inventory_team5.csv";
+        boolean authenticated = true;
+        int userType = 0;
+        InventoryManager(csvPath,authenticated,userType);
+
+    }
     // constructor: creates and runs the inventory manager
     // csvPath: local path of initial csv file
     // authenticated: is the user authenticated by the authentication side?
     // userType: 0 - Admin, 1 - Employee, 2 - Customer
 
-    public static void InventoryManager (String csvPath, boolean authenticated, int userType ) throws IOException,FileNotFoundException{
+    public static void InventoryManager (String csvPath, boolean authenticated, int userType ) throws FileNotFoundException, IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean run = true;
         while(run){
@@ -35,18 +45,19 @@ public class InventoryManager{
 
                 switch(Integer.parseInt(br.readLine())){                
                 case 0:
-                    
+                    Read(userType, inventoryTable);
                 case 1:
-
+                    Create(inventoryTable);
                 case 2:
-
+                    Update(inventoryTable);
                 case 3:
-
+                    Destroy(inventoryTable);
                 case 4:{
                     run = false;
                     break;
                 }    
-                default:  
+                default:
+                    System.out.println("Invalid, try again... \n\n");  
                 }
             }
             else if (userType ==1) //Employee
@@ -60,16 +71,19 @@ public class InventoryManager{
                 System.out.println("4 - Exit system "); // back to main? or fully exit
                 switch(Integer.parseInt(br.readLine())){                
                     case 0:
-                        
+                        Read(userType, inventoryTable);  
                     case 1:
-    
+                        Create(inventoryTable);
                     case 2:
-    
+                        Update(inventoryTable);
                     case 3:
-    
-                    case 4:
-                    
-                    default:  
+                        Destroy(inventoryTable);
+                    case 4:{
+                        run = false;
+                        break;
+                    }
+                    default: 
+                        System.out.println("Invalid, try again... \n\n"); 
                 }
             }
             else if(userType ==2) //customer
@@ -81,15 +95,22 @@ public class InventoryManager{
                 System.out.println("2 - Exit system "); // back to main? or fully exit
                 switch(Integer.parseInt(br.readLine())){                
                     case 0:
-                        
+                        Read(userType, inventoryTable);
                     case 1:
-    
+                        Purchase(inventoryTable);
                     case 2:
-                    
-                    default:  
+                        run = false;
+                        break;
+                    default: 
+                        System.out.println("Invalid, try again... \n\n");
+                         
                 }
             }
         }
+        System.out.println("Exiting system, writing back to CSV ");
+
+
+
     }
 
 
@@ -107,6 +128,7 @@ public class InventoryManager{
         
         BufferedReader br = new BufferedReader(new FileReader(csvPath));
         Hashtable<String, String[]> inventoryTable = new Hashtable<String,String[]>();
+        System.out.println("Loading... ");
         while (br.readLine()!= null)
         {
             String line;
@@ -120,12 +142,23 @@ public class InventoryManager{
             itemInfo[3] = sepLine[4];
             inventoryTable.put(sepLine[0],itemInfo); 
         }
+        System.out.println("Successfully Uploaded CSV");
         br.close();
+        
         return inventoryTable;
+        
+        
+        
+    }
+
+    static void Purchase(Hashtable<String,String[]> inventoryTable)
+    {
+        //customer method, uses update method.
+
     }
 
     static void Create(Hashtable<String,String[]> inventoryTable) {
-
+        System.out.println(" method not written ");
         //team write this method
 
         //hashtable: create a string for Item ID, and a string array for other info. use inventoryTable.put(String, String[])
@@ -133,18 +166,18 @@ public class InventoryManager{
 
     }
 
-    static void Update(){
-
+    static void Update(Hashtable<String,String[]> inventoryTable){
+        System.out.println(" method not written ");
         //team write this method
 
     }
-    static void Read(int userType,Hashtable<String,String[]> inventoryTable,String itemID){
-
+    static void Read(int userType,Hashtable<String,String[]> inventoryTable){
+        System.out.println(" method not written ");
         //team write this method
-
+        //usertype decides which data can be shown, eg customer should not be able to see inventory or wholesale price.
     }
-    static void Destroy(){
-
+    static void Destroy(Hashtable<String,String[]> inventoryTable){
+        System.out.println(" method not written ");
         //team write this method
 
     }
