@@ -24,15 +24,15 @@ public class InventoryManager{
     public static void InventoryManager (String csvPath, boolean authenticated, int userType ) throws FileNotFoundException, IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean run = true;
+        Hashtable<String,String[]> inventoryTable = uploadCsv(csvPath);
         while(run){
 
             //open initial csv
-            Hashtable<String,String[]> inventoryTable = uploadCsv(csvPath);
+            
 
             //which type of access?
 
-            if(userType == 0) //admin
-            {
+            if(userType == 0) {         //admin
 
                 System.out.println("Admin Access - Inventory System");
                 System.out.println("Enter a choice: ");
@@ -40,24 +40,34 @@ public class InventoryManager{
                 System.out.println("1 - Create an entry (new inventory item)");
                 System.out.println("2 - Update an entry (change inventory number, prices ) ");
                 System.out.println("3 - Delete an entry (delete an inventory item entirely) ");
-                System.out.println("4 - Exit system "); // back to main? or fully exit
+                System.out.println("4 - Exit system \n\n "); // back to main? or fully exit
 
-
+                
                 switch(Integer.parseInt(br.readLine())){                
-                case 0:
-                    Read(userType, inventoryTable);
-                case 1:
-                    Create(inventoryTable);
-                case 2:
-                    Update(inventoryTable);
-                case 3:
-                    Destroy(inventoryTable);
-                case 4:{
-                    run = false;
-                    break;
-                }    
-                default:
-                    System.out.println("Invalid, try again... \n\n");  
+                    case 0 :{
+                        Read(userType, inventoryTable);
+                        break;
+                    }
+                    case 1 :{
+                        Create(inventoryTable);
+                        break;
+                    }
+                    case 2 :{
+                        Update(inventoryTable);
+                        break;
+                    }
+                    case 3 :{
+                        Destroy(inventoryTable);
+                        break;
+                    }
+                    case 4 :{
+                        run = false;
+                        break;
+                    }    
+                    default:{
+                        System.out.println("Invalid, try again... \n\n"); 
+                        break;
+                    } 
                 }
             }
             else if (userType ==1) //Employee
@@ -70,15 +80,23 @@ public class InventoryManager{
                 System.out.println("3 - Delete an entry (delete an inventory item entirely) ");
                 System.out.println("4 - Exit system "); // back to main? or fully exit
                 switch(Integer.parseInt(br.readLine())){                
-                    case 0:
-                        Read(userType, inventoryTable);  
-                    case 1:
+                    case 0 :{
+                        Read(userType, inventoryTable);
+                        break;
+                    }  
+                    case 1 :{
                         Create(inventoryTable);
-                    case 2:
+                        break;
+                    }
+                    case 2 :{
                         Update(inventoryTable);
-                    case 3:
+                        break;
+                    }
+                    case 3 :{
                         Destroy(inventoryTable);
-                    case 4:{
+                        break;
+                    }
+                    case 4 :{
                         run = false;
                         break;
                     }
@@ -86,28 +104,37 @@ public class InventoryManager{
                         System.out.println("Invalid, try again... \n\n"); 
                 }
             }
-            else if(userType ==2) //customer
+            else if(userType == 2) //customer
             {
                 System.out.println("Customer Access - Inventory System");
                 System.out.println("Enter a choice: ");
                 System.out.println("0 - Search an entry (read) ");
                 System.out.println("1 - Purchase an item ");
                 System.out.println("2 - Exit system "); // back to main? or fully exit
-                switch(Integer.parseInt(br.readLine())){                
-                    case 0:
+                switch(br.read()){                
+                    case 0 :{
                         Read(userType, inventoryTable);
-                    case 1:
+                        break;
+                        }
+                    case 1 :{
                         Purchase(inventoryTable);
-                    case 2:
+                        break;
+                    }
+                    case 2 :{
                         run = false;
                         break;
-                    default: 
+                    }
+                    default :{
                         System.out.println("Invalid, try again... \n\n");
-                         
+                        break;
+                    }
                 }
             }
         }
+        
+        
         System.out.println("Exiting system, writing back to CSV ");
+        //TODO: WRITE OUT TO CSV
 
 
 
@@ -153,12 +180,14 @@ public class InventoryManager{
 
     static void Purchase(Hashtable<String,String[]> inventoryTable)
     {
+        System.out.println(" method not written ");
         //customer method, uses update method.
 
     }
 
     static void Create(Hashtable<String,String[]> inventoryTable) {
         System.out.println(" method not written ");
+
         //team write this method
 
         //hashtable: create a string for Item ID, and a string array for other info. use inventoryTable.put(String, String[])
