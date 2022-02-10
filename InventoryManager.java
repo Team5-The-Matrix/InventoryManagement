@@ -250,12 +250,44 @@ public class InventoryManager{
 
     }
     static void Read(int userType,Hashtable<String,String[]> inventoryTable){
-    System.out.println("Not yet Written.");
+        Scanner scn = new Scanner(System.in);
+        System.out.println(" Enter Inventory ID to Read: ");
+        String readID = scn.nextLine();
+        String itemInfo[] = inventoryTable.get(readID);
         
+        switch(userType){                
+            case 0 :{ //admin login
+               System.out.println(readID);
+               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Wholesale Price: " + itemInfo[1]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               System.out.println("Supplier: " + itemInfo[4]);
+               break;
+               }
+            case 1 :{ //employee login
+               System.out.println(readID);
+               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Wholesale Price: " + itemInfo[1]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               System.out.println("Supplier: " + itemInfo[4]);
+               break;
+               }
+            case 2:{ //customer login
+               System.out.println(readID);
+               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               break;
+               }
+            default:{
+               System.out.println("Error, please validate authentication.)");
+               }
+         }
+         
+         scn.close();
     }
     static void Destroy(Hashtable<String,String[]> inventoryTable){
         Scanner scn = new Scanner(System.in);
-        System.out.println(" Enter Inventory Key to Delete: ");
+        System.out.println(" Enter Inventory ID to Delete: ");
         String itemKey = scn.nextLine();
         inventoryTable.remove(itemKey);
         System.out.println("Entry deleted.");
