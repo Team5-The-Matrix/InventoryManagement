@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 public class InventoryManager{
 
@@ -92,7 +93,7 @@ public class InventoryManager{
                         Update(inventoryTable);
                         break;
                     }
-                    case 3 :{
+                    case 3 :{                      
                         Destroy(inventoryTable);
                         break;
                     }
@@ -234,19 +235,22 @@ public class InventoryManager{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println(" Enter Item ID to Update: ");
-        String itemID= br.readLine();
+        String itemID = br.readLine();
         String[] info = inventoryTable.get(itemID);
         
 
     }
     static void Read(int userType,Hashtable<String,String[]> inventoryTable){
-        System.out.println(" method not written ");
-        //team write this method
-        //usertype decides which data can be shown, eg customer should not be able to see inventory or wholesale price.
+    System.out.println("Not yet Written.");
+        
     }
     static void Destroy(Hashtable<String,String[]> inventoryTable){
-        System.out.println(" method not written ");
-        //team write this method
+        Scanner scn = new Scanner(System.in);
+        
+        System.out.println(" Enter Inventory Key to Delete: ");
+        int itemKey = scn.nextInt();
+        inventoryTable.remove(itemKey);
+        System.out.println("Entry deleted.");
 
     }
     
