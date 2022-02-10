@@ -185,19 +185,58 @@ public class InventoryManager{
 
     }
 
-    static void Create(Hashtable<String,String[]> inventoryTable) {
-        System.out.println(" method not written ");
+    static void Create(Hashtable<String,String[]> inventoryTable) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        boolean create= true;
+        String itemID;
+        String info[] = new String[4];
+        do
+        {
+            System.out.println(" Create An Inventory Entry: \n");
+            System.out.println(" Enter Item ID:  ");
+            itemID = br.readLine();
+            
+            System.out.println("Item ID Entered: " + itemID + "\n");
+            
 
-        //team write this method
+            System.out.println("Enter Inventory Quantity: ");
+            info[0] = br.readLine();
 
-        //hashtable: create a string for Item ID, and a string array for other info. use inventoryTable.put(String, String[])
+            System.out.println("Enter Wholesale Price (do not include '$') : ");
+            info[1] = br.readLine();
 
+            System.out.println("Enter Sale Price (do not include '$') : ");
+            info[2] = br.readLine();
 
+            System.out.println("Enter Supplier ID :" );
+            info[3] = br.readLine();
+
+            System.out.println(" Item to be added: \n  ");
+            System.out.println(itemID + "," + info[0]+","+ info[1]+","+info[2]+","+info[3]);
+            System.out.println(" is this correct? enter y or n ");
+
+            if(br.readLine().equals("y"))
+                {
+                    create = false;
+                }
+            else if(br.readLine().equals("n"))
+                {
+                    System.out.println(" Restarting... ");
+                }    
+        }
+        while(create);
+        
+        inventoryTable.put(itemID, info);
+        System.out.println(" Item Added! ");
     }
 
-    static void Update(Hashtable<String,String[]> inventoryTable){
-        System.out.println(" method not written ");
-        //team write this method
+    static void Update(Hashtable<String,String[]> inventoryTable) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println(" Enter Item ID to Update: ");
+        String itemID= br.readLine();
+        String[] info = inventoryTable.get(itemID);
+        
 
     }
     static void Read(int userType,Hashtable<String,String[]> inventoryTable){
