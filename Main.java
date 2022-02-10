@@ -16,7 +16,7 @@ System.out.println("Log in to get started: ");
 System.out.println(" Authenticated. "); //or not authenticated
 
         // These are test values - Authenticated Class should return something similar
-        boolean authenticated = true;
+        int authenticated = 0; //(true)
         int userType = 0; //admin 
        
 

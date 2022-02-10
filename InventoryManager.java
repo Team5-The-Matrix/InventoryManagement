@@ -10,10 +10,10 @@ public class InventoryManager{
 
 
     public static void main(String[] args) throws FileNotFoundException, IOException{
-        String csvPath = "/Users/noahpearsonkramer/Desktop/Sprint1/inventory_team5.csv";
+       /*  String csvPath = "/Users/noahpearsonkramer/Desktop/Sprint1/inventory_team5.csv";
         boolean authenticated = true;
         int userType = 0;
-        InventoryManager(csvPath,authenticated,userType);
+        InventoryManager(csvPath,authenticated,userType); */
 
     }
     // constructor: creates and runs the inventory manager
@@ -21,13 +21,17 @@ public class InventoryManager{
     // authenticated: is the user authenticated by the authentication side?
     // userType: 0 - Admin, 1 - Employee, 2 - Customer
 
-    public static void InventoryManager (String csvPath, boolean authenticated, int userType ) throws FileNotFoundException, IOException{
+    public static void InventoryManager (String csvPath, int authenticated, int userType ) throws FileNotFoundException, IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        boolean run = true;
+        
+        //open initial csv
         Hashtable<String,String[]> inventoryTable = uploadCsv(csvPath);
+        
+        //run program
+        boolean run = true;
         while(run){
 
-            //open initial csv
+            
             
 
             //which type of access?
@@ -135,11 +139,14 @@ public class InventoryManager{
         
         System.out.println("Exiting system, writing back to CSV ");
         //TODO: WRITE OUT TO CSV
-
+        WriteToCSV(inventoryTable,csvPath);
 
 
     }
-
+    static void WriteToCSV(Hashtable<String,String[]> inventoryTable, String path)
+    {
+        
+    }
 
 
     //uploadCsv : method to read initial csv file into a hashTable for fast search
@@ -169,6 +176,10 @@ public class InventoryManager{
         
         
     }
+
+    
+
+
 
     static void Purchase(Hashtable<String,String[]> inventoryTable)
     {
