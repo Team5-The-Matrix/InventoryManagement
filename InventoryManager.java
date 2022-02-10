@@ -141,14 +141,6 @@ public class InventoryManager{
     }
 
 
-    public static void search(int userType,Hashtable<String,String[]> inventoryTable,String itemID)
-    {
-
-
-
-    }
-
-
 
     //uploadCsv : method to read initial csv file into a hashTable for fast search
     static Hashtable<String,String[]> uploadCsv(String csvPath) throws FileNotFoundException, IOException{
@@ -236,7 +228,7 @@ public class InventoryManager{
         System.out.println(" Enter Item ID to Update: ");
         String itemID= br.readLine();
         String[] info = inventoryTable.get(itemID);
-        
+
 
     }
     static void Read(int userType,Hashtable<String,String[]> inventoryTable){
