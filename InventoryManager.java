@@ -1,3 +1,9 @@
+/*
+Inventory Manager Class
+
+Authors: Noah Pearson Kramer, Aria Comeau, Milagros Hernandez-Vasquez
+
+*/
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -249,11 +255,11 @@ public class InventoryManager{
     }
     static void Destroy(Hashtable<String,String[]> inventoryTable){
         Scanner scn = new Scanner(System.in);
-        
         System.out.println(" Enter Inventory Key to Delete: ");
-        int itemKey = scn.nextInt();
+        String itemKey = scn.nextLine();
         inventoryTable.remove(itemKey);
         System.out.println("Entry deleted.");
+        scn.close();
 
     }
     
