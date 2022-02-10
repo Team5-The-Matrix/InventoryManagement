@@ -258,7 +258,7 @@ public class InventoryManager{
         switch(userType){                
             case 0 :{ //admin login
                System.out.println(readID);
-               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Quantity: " + itemInfo[0]);
                System.out.println("Wholesale Price: " + itemInfo[1]);
                System.out.println("Sale Price: " + itemInfo[2]);
                System.out.println("Supplier: " + itemInfo[4]);
@@ -266,7 +266,7 @@ public class InventoryManager{
                }
             case 1 :{ //employee login
                System.out.println(readID);
-               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Quantity: " + itemInfo[0]);
                System.out.println("Wholesale Price: " + itemInfo[1]);
                System.out.println("Sale Price: " + itemInfo[2]);
                System.out.println("Supplier: " + itemInfo[4]);
@@ -274,7 +274,7 @@ public class InventoryManager{
                }
             case 2:{ //customer login
                System.out.println(readID);
-               System.out.println("Quanitity: " + itemInfo[0]);
+               System.out.println("Quantity: " + itemInfo[0]);
                System.out.println("Sale Price: " + itemInfo[2]);
                break;
                }
