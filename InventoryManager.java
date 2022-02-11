@@ -1,7 +1,7 @@
 /*
 Inventory Manager Class
 
-Authors: Noah Pearson Kramer, Aria Comeau, Milagros Hernandez-Vasquez
+Authors: Noah Pearson Kramer, Aria Comeau
 
 */
 import java.io.BufferedReader;
