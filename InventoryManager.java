@@ -1,19 +1,27 @@
+/*
+Inventory Manager Class
+
+Authors: Noah Pearson Kramer, Aria Comeau
+
+*/
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.Scanner;
 
-public class InventoryManager{
+public class InventoryManager extends Main{
 
 
 
-    public static void main(String[] args) throws FileNotFoundException, IOException{
-        String csvPath = "/Users/noahpearsonkramer/Desktop/Sprint1/inventory_team5.csv";
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        String csvPath = path;
+        //String csvPath = path;
         boolean authenticated = true;
         int userType = 0;
-        InventoryManager(csvPath,authenticated,userType);
+        InventoryManager(csvPath,authenticated,userType); 
 
     }
     // constructor: creates and runs the inventory manager
@@ -22,12 +30,24 @@ public class InventoryManager{
     // userType: 0 - Admin, 1 - Employee, 2 - Customer
 
     public static void InventoryManager (String csvPath, boolean authenticated, int userType ) throws FileNotFoundException, IOException{
+        
+        try
+        {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        boolean run = true;
+        
+        //open initial csv
         Hashtable<String,String[]> inventoryTable = uploadCsv(csvPath);
+        }
+        catch (IOException e)   
+        {  
+            e.printStackTrace();  
+        }
+        
+        //run program
+        boolean run = true;
         while(run){
 
-            //open initial csv
+            
             
 
             //which type of access?
@@ -92,7 +112,7 @@ public class InventoryManager{
                         Update(inventoryTable);
                         break;
                     }
-                    case 3 :{
+                    case 3 :{                      
                         Destroy(inventoryTable);
                         break;
                     }
@@ -135,48 +155,56 @@ public class InventoryManager{
         
         System.out.println("Exiting system, writing back to CSV ");
         //TODO: WRITE OUT TO CSV
-
+        WriteToCSV(inventoryTable,csvPath);
 
 
     }
-
-
-    public static void search(int userType,Hashtable<String,String[]> inventoryTable,String itemID)
+    static void WriteToCSV(Hashtable<String,String[]> inventoryTable, String path)
     {
-
-
-
+        
     }
-
 
 
     //uploadCsv : method to read initial csv file into a hashTable for fast search
     static Hashtable<String,String[]> uploadCsv(String csvPath) throws FileNotFoundException, IOException{
         
-        BufferedReader br = new BufferedReader(new FileReader(csvPath));
         Hashtable<String, String[]> inventoryTable = new Hashtable<String,String[]>();
-        System.out.println("Loading... ");
-        while (br.readLine()!= null)
+        String line = "";
+        
+        try 
         {
-            String line;
-            String[] sepLine;
-            line = br.readLine();
-            sepLine = line.split(",");
-            String[] itemInfo = new String[4];
-            itemInfo[0] = sepLine[1];
-            itemInfo[1] = sepLine[2];
-            itemInfo[2] = sepLine[3];
-            itemInfo[3] = sepLine[4];
-            inventoryTable.put(sepLine[0],itemInfo); 
-        }
+            BufferedReader br = new BufferedReader(new FileReader(csvPath));
+            System.out.println("Loading... ");
+            
+            while ((line = br.readLine()) != null) 
+            {
+                String[]sepLine = line.split(",");
+                String[] itemInfo = new String[4];
+                itemInfo[0] = sepLine[1];
+                itemInfo[1] = sepLine[2];
+                itemInfo[2] = sepLine[3];
+                itemInfo[3] = sepLine[4];
+                inventoryTable.put(sepLine[0],itemInfo); 
+            }
+                     
         System.out.println("Successfully Uploaded CSV");
         br.close();
         
+  
+        }
+        
+        catch (IOException e)   
+        {  
+            e.printStackTrace();  
+        }
         return inventoryTable;
         
-        
-        
     }
+
+
+    
+
+
 
     static void Purchase(Hashtable<String,String[]> inventoryTable)
     {
@@ -234,19 +262,52 @@ public class InventoryManager{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println(" Enter Item ID to Update: ");
-        String itemID= br.readLine();
+        String itemID = br.readLine();
         String[] info = inventoryTable.get(itemID);
-        
+
 
     }
     static void Read(int userType,Hashtable<String,String[]> inventoryTable){
-        System.out.println(" method not written ");
-        //team write this method
-        //usertype decides which data can be shown, eg customer should not be able to see inventory or wholesale price.
+        Scanner scn = new Scanner(System.in);
+        System.out.println(" Enter Inventory ID to Read: ");
+        String readID = scn.nextLine();
+        String itemInfo[] = inventoryTable.get(readID);
+        
+        switch(userType){                
+            case 0 :{ //admin login
+               System.out.println(readID);
+               System.out.println("Quantity: " + itemInfo[0]);
+               System.out.println("Wholesale Price: " + itemInfo[1]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               System.out.println("Supplier: " + itemInfo[3]);
+               break;
+               }
+            case 1 :{ //employee login
+               System.out.println(readID);
+               System.out.println("Quantity: " + itemInfo[0]);
+               System.out.println("Wholesale Price: " + itemInfo[1]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               System.out.println("Supplier: " + itemInfo[3]);
+               break;
+               }
+            case 2:{ //customer login
+               System.out.println(readID);
+               System.out.println("Quantity: " + itemInfo[0]);
+               System.out.println("Sale Price: " + itemInfo[2]);
+               break;
+               }
+            default:{
+               System.out.println("Error, please validate authentication.)");
+               }
+         }
+         
     }
     static void Destroy(Hashtable<String,String[]> inventoryTable){
-        System.out.println(" method not written ");
-        //team write this method
+        Scanner scn = new Scanner(System.in);
+        System.out.println(" Enter Inventory ID to Delete: ");
+        String itemKey = scn.nextLine();
+        inventoryTable.remove(itemKey);
+        System.out.println("Entry deleted.");
 
     }
     
