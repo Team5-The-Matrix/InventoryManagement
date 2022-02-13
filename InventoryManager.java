@@ -146,7 +146,7 @@ public class InventoryManager{
         
         System.out.println("Exiting system, writing back to CSV ");
         WriteToCSV(inventoryTable,csvPath);
-
+        br.close();
 
     }
     static void WriteToCSV(Hashtable<String,String[]> inventoryTable, String path) throws IOException
@@ -154,7 +154,7 @@ public class InventoryManager{
         BufferedWriter bw = new BufferedWriter(new FileWriter(path,false)); //false overwrites the file, true appends. for max efficiency in future we could append /update only changed lines.
         Enumeration<String> en = inventoryTable.keys();
         String[] values = new String[4];
-        int count;
+        int count=0;
         while(en.hasMoreElements())
         {
             String key = en.nextElement();
@@ -382,7 +382,7 @@ public class InventoryManager{
          }
          
          
-    }
+    
     static void Destroy(Hashtable<String,String[]> inventoryTable){
         Scanner scn = new Scanner(System.in);
         System.out.println(" Enter Inventory ID to Delete: ");
@@ -401,4 +401,3 @@ public class InventoryManager{
 
     }
     
-}
