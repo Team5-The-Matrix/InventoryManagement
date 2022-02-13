@@ -6,51 +6,51 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserAuthentication{
+    public static String unInput;
+    public static HashMap<String, String[]> login = new HashMap<String, String[]>();
+    private static String passwordInput;
 
-
-    public static HashMap<String, String[]> GetLogin ()  throws FileNotFoundException, IOException{
-        
-        //CSV should be formatted: username, user type, password
+    //Formats CSV into hashmap, asks for user input, and checks if it is correct
+    public static void main(String[] args) throws FileNotFoundException, IOException{
+         //CSV should be formatted: username, user type, password
         //read and map CSV to HashMap
         FileReader loginFileReader = new FileReader("LoginInformation.csv");
-        HashMap<String, String[]> login = new HashMap<String, String[]>();
         BufferedReader loginBufferedReader = new BufferedReader(loginFileReader);
 
-        
         String loginLine = "";
         while((loginLine = loginBufferedReader.readLine()) != null){
             String[] row = loginLine.split(",");
+            //UTP = UserType, Password
             String[] UTP = new String[2];
             UTP[0] = row[1];
             UTP[1] = row[2];
             login.put(row[0], UTP);
         }
         loginBufferedReader.close();
-        return login;
-    }
-
-
-    public static boolean RunAuthenticator(HashMap<String, String[]> login){
 
         //user inputs login information
         System.out.println("Username:");
         Scanner loginEntry = new Scanner(System.in); 
-        String unInput = loginEntry.nextLine();
+        unInput = loginEntry.nextLine();
         System.out.println("Password:");
-        String passwordInput = loginEntry.nextLine();
+        passwordInput = loginEntry.nextLine();
+        loginEntry.close();
 
-        if (CorrectLogin(login, unInput, passwordInput)){
+        if (CorrectLogin()){
             System.out.println("login successful");
         } else{
             System.out.println("Username or password is incorrect");
         }
-        loginEntry.close();
-        return true;
     }
 
 
+    public static String GetUsername(){
+        return unInput;
+    }
+
+        
     //check if username exists and password is correct
-    public static boolean CorrectLogin(HashMap<String, String[]> login, String unInput, String passwordInput){
+    public static boolean CorrectLogin(){
         for(String i : login.keySet()){
             if (unInput.equals(i) && passwordInput.equals(login.get(i)[1])){
                 return true;
@@ -66,12 +66,22 @@ public class UserAuthentication{
     }
 
 
-    /*public static int PriorityLevel(){
+    //gives user type and if they are authenticated
+    public static int[] GetUserType(){
+        //userType[0] = type of user (0 = admin, 1 = employee, 2 = customer) 
+        //userType[1] = authenticated(1) or not authenticated(0)
+        int[] userType = new int[2];
+        userType[0] = (Integer.parseInt(login.get(unInput)[0]));
+        if (userType[0] == 0 || userType[0] == 1)
+            userType[1] = 1;
+        else
+            userType[1] = 0;
+        return userType;
+    }
 
-    }*/
-
+    
     //creates new user. Not functional yet.
-    public static void CreateNewUser(HashMap<String, String[]> login){
+    public static void CreateNewUser(){
         System.out.println("Please input username to be added:");
         //add username to login hashmap
         Scanner addLogin = new Scanner(System.in);
@@ -81,7 +91,8 @@ public class UserAuthentication{
         System.out.println("Please input password:");
         String newPassword = addLogin.nextLine();
 
-        System.out.println("Please input user type \n 1. Admin \n 2."); //1. admin can add new users 2.?? can only add products
+        System.out.println("Please input user type \n 1. Admin \n 2."); 
+        //0. admin can add new users 1.employee can only add products 2. customer ??
         String newUserType = addLogin.nextLine();
 
         String[] newUTP = new String[2];
@@ -93,13 +104,13 @@ public class UserAuthentication{
 
 
     //deletes user from both login hashmap and CSV
-    public static void DeleteUser(HashMap<String, String[]> login){
+    public static void DeleteUser(){
         
     }
 
 
     //upadates user in both login hashmap and CSV
-    public static void UpdateUser(HashMap<String, String[]> login){
+    public static void UpdateUser(){
         
     }
 }
