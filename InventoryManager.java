@@ -5,10 +5,13 @@ Authors: Noah Pearson Kramer, Aria Comeau
 
 */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -37,9 +40,6 @@ public class InventoryManager{
         //run program
         boolean run = true;
         while(run){
-
-            
-            
 
             //which type of access?
 
@@ -145,14 +145,26 @@ public class InventoryManager{
         
         
         System.out.println("Exiting system, writing back to CSV ");
-        //TODO: WRITE OUT TO CSV
         WriteToCSV(inventoryTable,csvPath);
 
 
     }
-    static void WriteToCSV(Hashtable<String,String[]> inventoryTable, String path)
+    static void WriteToCSV(Hashtable<String,String[]> inventoryTable, String path) throws IOException
     {
-        
+        BufferedWriter bw = new BufferedWriter(new FileWriter(path,false)); //false overwrites the file, true appends. for max efficiency in future we could append /update only changed lines.
+        Enumeration<String> en = inventoryTable.keys();
+        String[] values = new String[4];
+        int count;
+        while(en.hasMoreElements())
+        {
+            String key = en.nextElement();
+            values = inventoryTable.get(key);
+            bw.write(key+","+values[0]+","+values[1]+","+values[2]+","+values[3]);
+            count++;
+        }
+        bw.close();
+        System.out.println("Wrote " +count+ "Lines");
+        System.out.println("Successfully wrote to CSV ");
     }
 
 
@@ -162,6 +174,7 @@ public class InventoryManager{
         BufferedReader br = new BufferedReader(new FileReader(csvPath));
         Hashtable<String, String[]> inventoryTable = new Hashtable<String,String[]>();
         System.out.println("Loading... ");
+        int lineCount = 0;
         while (br.readLine()!= null)
         {
             String line;
@@ -174,8 +187,11 @@ public class InventoryManager{
             itemInfo[2] = sepLine[3];
             itemInfo[3] = sepLine[4];
             inventoryTable.put(sepLine[0],itemInfo); 
+            lineCount++;
         }
+        System.out.println("Read "+lineCount+" Lines...");
         System.out.println("Successfully Uploaded CSV");
+        
         br.close();
         
         return inventoryTable;
@@ -231,7 +247,7 @@ public class InventoryManager{
                 }
             else if(br.readLine().equals("n"))
                 {
-                    System.out.println(" Restarting... ");
+                    System.out.println("/n Restarting... /n");
                 }    
         }
         while(create);
@@ -245,7 +261,80 @@ public class InventoryManager{
 
         System.out.println(" Enter Item ID to Update: ");
         String itemID = br.readLine();
-        String[] info = inventoryTable.get(itemID);
+        String updatedValue = null;
+        if (inventoryTable.containsKey(itemID)){
+            String[] info = inventoryTable.get(itemID);
+            System.out.println("Inventory listing: Enter a number to update" );
+            System.out.println("(1)"+"Product ID: " +itemID);
+            System.out.println("(2)"+"Quantity: "+ info[0]);
+            System.out.println("(3)"+"Wholesale Cost: " + info[1]);
+            System.out.println("(4)"+"Sale Price: " + info[2]);
+            System.out.println("(5)"+"Supplier ID " + info[3]);
+
+            switch(br.read()){
+
+                case 1:{
+                    System.out.println("Update Product ID: ");
+                    System.out.println("Enter new value: ");
+                    updatedValue = br.readLine();
+
+                    //delete old entry, create new one
+                    inventoryTable.remove(itemID);
+                    inventoryTable.put(updatedValue,info);
+                }
+                case 2:{
+                    System.out.println("Update Quantity: ");
+                    System.out.println("Enter new value: ");
+                    updatedValue = br.readLine();
+                    // update array, delete old entry, create new one
+                    info[0] = updatedValue;
+                    inventoryTable.remove(itemID);
+                    inventoryTable.put(itemID, info);
+                }
+                case 3:{
+                    System.out.println("Update Wholesale Cost: ");
+                    System.out.println("Enter new value: ");
+                    updatedValue = br.readLine();
+                    // update array, delete old entry, create new one
+                    info[1] = updatedValue;
+                    inventoryTable.remove(itemID);
+                    inventoryTable.put(itemID, info);
+
+                }
+                case 4:{
+                    System.out.println("Update Sale Price: ");
+                    System.out.println("Enter new value: ");
+                    updatedValue = br.readLine();
+                    // update array, delete old entry, create new one
+                    info[2] = updatedValue;
+                    inventoryTable.remove(itemID);
+                    inventoryTable.put(itemID, info);
+
+                }
+                case 5:{
+                    System.out.println("Update Supplier ID: ");
+                    System.out.println("Enter new value: ");
+                    updatedValue = br.readLine();
+                    // update array, delete old entry, create new one
+                    info[3] = updatedValue;
+                    inventoryTable.remove(itemID);
+                    inventoryTable.put(itemID, info);
+
+                }
+                default:{
+                    System.out.println("Entered invalid choice");
+
+                }
+            }
+
+
+        }
+        else{
+            System.out.println("/n Key not found, no operation performed... /n");
+        } 
+
+
+        //TODO
 
 
     }
@@ -253,6 +342,8 @@ public class InventoryManager{
         Scanner scn = new Scanner(System.in);
         System.out.println(" Enter Inventory ID to Read: ");
         String readID = scn.nextLine();
+
+        if (inventoryTable.containsKey(readID)){
         String itemInfo[] = inventoryTable.get(readID);
         
         switch(userType){                
@@ -281,17 +372,32 @@ public class InventoryManager{
             default:{
                System.out.println("Error, please validate authentication.)");
                }
+            }
+            
+
+            }
+            else{
+                System.out.println(" Key not found, no operation performed \n ");
+            }
          }
          
-         scn.close();
+         
     }
     static void Destroy(Hashtable<String,String[]> inventoryTable){
         Scanner scn = new Scanner(System.in);
         System.out.println(" Enter Inventory ID to Delete: ");
         String itemKey = scn.nextLine();
-        inventoryTable.remove(itemKey);
-        System.out.println("Entry deleted.");
-        scn.close();
+        if(inventoryTable.containsKey(itemKey)){
+            inventoryTable.remove(itemKey);
+            System.out.println("Entry deleted.");
+        }
+        else{
+            System.out.println("Key not found, no operation performed \n ");
+        }
+        
+        }
+        
+        
 
     }
     

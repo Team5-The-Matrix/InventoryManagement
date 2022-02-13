@@ -11,7 +11,7 @@ public class UserAuthentication{
     private static String passwordInput;
 
     //Formats CSV into hashmap, asks for user input, and checks if it is correct
-    public static void main(String[] args) throws FileNotFoundException, IOException{
+    public static void main() throws FileNotFoundException, IOException{
          //CSV should be formatted: username, user type, password
         //read and map CSV to HashMap
         FileReader loginFileReader = new FileReader("LoginInformation.csv");
@@ -34,7 +34,7 @@ public class UserAuthentication{
         unInput = loginEntry.nextLine();
         System.out.println("Password:");
         passwordInput = loginEntry.nextLine();
-        loginEntry.close();
+        //loginEntry.close(); - closing stream breaks main program, keeping it open.
 
         if (CorrectLogin()){
             System.out.println("login successful");

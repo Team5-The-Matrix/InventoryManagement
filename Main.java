@@ -9,35 +9,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
+
 public class Main{
 
-public static void main(String[] args) throws IOException{
-
-BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   
-System.out.println("Welcome to Inventory Manager V1.0 \n");
-
-System.out.println("Log in to get started: ");
-//Call Authentication class or method here
-
-System.out.println(" Authenticated. "); //or not authenticated
-
-        // These are test values - Authenticated Class should return something similar
-        int authenticated = 0; //(true)
-        int userType = 0; //admin 
-       
-
+public static void main(String[] args) throws IOException{  
+System.out.println("\n Welcome to Inventory Manager V1.0 \n");
+System.out.println("Log in to get started: \n");
+        //Call Authentication class or method here
+UserAuthentication.main();
+int[] isAuthenticated = UserAuthentication.GetUserType();
+int authenticated = isAuthenticated[0]; 
+int userType = isAuthenticated[1];
+if (authenticated == 0){
+        System.out.println("\nAuthenticated\n");        
+}
+else{
+        System.out.println("Authentication failed, try again");
+}
 
 System.out.println("Enter local path of inventory file: ");
-String path = br.readLine();
-
-// call to inventory manager static method
+BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in)); 
+String path = br1.readLine(); 
 InventoryManager.InventoryManager(path, authenticated, userType); 
-
-
-
-
 }
-
-
-
 }
+// call to inventory manager static method
+
+
+
