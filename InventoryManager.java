@@ -159,7 +159,7 @@ public class InventoryManager{
         {
             String key = en.nextElement();
             values = inventoryTable.get(key);
-            bw.write(key+","+values[0]+","+values[1]+","+values[2]+","+values[3]);
+            bw.write(key+","+values[0]+","+values[1]+","+values[2]+","+values[3]+"\n");
             count++;
         }
         bw.close();
@@ -330,7 +330,7 @@ public class InventoryManager{
 
         }
         else{
-            System.out.println("/n Key not found, no operation performed... /n");
+            System.out.println("\n Key not found, no operation performed... \n");
         } 
 
 
@@ -352,7 +352,7 @@ public class InventoryManager{
                System.out.println("Quantity: " + itemInfo[0]);
                System.out.println("Wholesale Price: " + itemInfo[1]);
                System.out.println("Sale Price: " + itemInfo[2]);
-               System.out.println("Supplier: " + itemInfo[4]);
+               System.out.println("Supplier: " + itemInfo[3]);
                break;
                }
             case 1 :{ //employee login
@@ -360,7 +360,7 @@ public class InventoryManager{
                System.out.println("Quantity: " + itemInfo[0]);
                System.out.println("Wholesale Price: " + itemInfo[1]);
                System.out.println("Sale Price: " + itemInfo[2]);
-               System.out.println("Supplier: " + itemInfo[4]);
+               System.out.println("Supplier: " + itemInfo[3]);
                break;
                }
             case 2:{ //customer login

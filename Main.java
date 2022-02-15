@@ -30,7 +30,14 @@ else{
 System.out.println("Enter local path of inventory file: ");
 BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in)); 
 String path = br1.readLine(); 
+try{
 InventoryManager.InventoryManager(path, authenticated, userType); 
+}
+catch(NullPointerException e)
+{
+e.printStackTrace();
+}
+
 }
 }
 // call to inventory manager static method
