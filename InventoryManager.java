@@ -175,12 +175,10 @@ public class InventoryManager{
         Hashtable<String, String[]> inventoryTable = new Hashtable<String,String[]>();
         System.out.println("Loading... ");
         int lineCount = 0;
-        while (br.readLine()!= null)
+        String line;
+        while ((line = br.readLine())!= null)
         {
-            String line;
-            String[] sepLine;
-            line = br.readLine();
-            sepLine = line.split(",");
+            String[] sepLine = line.split(",");
             String[] itemInfo = new String[4];
             itemInfo[0] = sepLine[1];
             itemInfo[1] = sepLine[2];
@@ -271,7 +269,7 @@ public class InventoryManager{
             System.out.println("(4)"+"Sale Price: " + info[2]);
             System.out.println("(5)"+"Supplier ID " + info[3]);
 
-            switch(br.read()){
+            switch(Integer.parseInt(br.readLine())){
 
                 case 1:{
                     System.out.println("Update Product ID: ");
