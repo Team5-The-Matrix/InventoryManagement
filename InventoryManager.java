@@ -279,6 +279,7 @@ public class InventoryManager{
                     //delete old entry, create new one
                     inventoryTable.remove(itemID);
                     inventoryTable.put(updatedValue,info);
+                    break;
                 }
                 case 2:{
                     System.out.println("Update Quantity: ");
@@ -288,6 +289,7 @@ public class InventoryManager{
                     info[0] = updatedValue;
                     inventoryTable.remove(itemID);
                     inventoryTable.put(itemID, info);
+                    break;
                 }
                 case 3:{
                     System.out.println("Update Wholesale Cost: ");
@@ -297,7 +299,7 @@ public class InventoryManager{
                     info[1] = updatedValue;
                     inventoryTable.remove(itemID);
                     inventoryTable.put(itemID, info);
-
+                    break;
                 }
                 case 4:{
                     System.out.println("Update Sale Price: ");
@@ -307,6 +309,7 @@ public class InventoryManager{
                     info[2] = updatedValue;
                     inventoryTable.remove(itemID);
                     inventoryTable.put(itemID, info);
+                    break;
 
                 }
                 case 5:{
@@ -317,10 +320,12 @@ public class InventoryManager{
                     info[3] = updatedValue;
                     inventoryTable.remove(itemID);
                     inventoryTable.put(itemID, info);
+                    break;
 
                 }
                 default:{
                     System.out.println("Entered invalid choice");
+                    break;
 
                 }
             }
