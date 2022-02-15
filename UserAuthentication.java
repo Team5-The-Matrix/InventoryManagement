@@ -105,12 +105,33 @@ public class UserAuthentication{
 
     //deletes user from both login hashmap and CSV
     public static void DeleteUser(){
-        
+        Scanner loginC = new Scanner(System.in);
+
+        System.out.println("Enter the username to delete");
+        String UserD = loginC.nextLine();
+
+        //removes user from hast table
+        login.remove(UserD);
+        loginC.close();
     }
 
 
     //upadates user in both login hashmap and CSV
     public static void UpdateUser(){
         
+        Scanner loginC = new Scanner(System.in);
+
+        System.out.println("Enter the username to update");
+        String User = loginC.nextLine();
+
+        System.out.println("Enter the updated username");
+        String UserUP = loginC.nextLine();
+
+        //adds new username and removes the older one from hast table
+        login.put(UserUP, login.get(User));
+        login.remove(User);
+
+        loginC.close();
+
     }
 }
